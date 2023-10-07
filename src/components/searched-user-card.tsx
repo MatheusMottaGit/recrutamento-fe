@@ -1,32 +1,28 @@
-import { User } from '@/App'
 import { Card, CardContent, CardDescription, CardTitle } from './ui/card'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from './ui/badge'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Button } from './ui/button'
+import { useNavigate } from 'react-router-dom'
+import { Clipboard } from 'lucide-react'
+import { useGithub } from '@/hooks/useGithub'
+import { User } from '@/types/types'
 
 interface SearchedUserProps {
   user: User
 }
 
-type Repo = {
-  name: string
-  description: string
-}
-
 const SearchedUserCard = (props: SearchedUserProps) => {
-  const [repos, setRepos] = useState<Repo[]>([])
+  const navigate = useNavigate()
 
-  async function getRepos() {
-    const response = await fetch(props.user.repos_url)
-    const data: Repo[] = await response.json()
+  const { getRepos, repos } = useGithub()
 
-    console.log(data)
-    setRepos(data)
+  function pageHandler(url: string) {
+    return navigate(url)
   }
 
   useEffect(() => {
-    getRepos()
+    getRepos(props.user.repos_url)
   }, [])
 
 
@@ -37,8 +33,8 @@ const SearchedUserCard = (props: SearchedUserProps) => {
           <AvatarImage src={props.user.avatar_url} />
         </Avatar>
 
-        <div className="space-y-1">
-          <div className="flex items-center justify-between">
+        <div className="space-y-2">
+          <div className="flex items-center gap-4">
             <CardTitle>{props.user.name}</CardTitle>
 
             <div className="flex gap-3">
@@ -55,15 +51,27 @@ const SearchedUserCard = (props: SearchedUserProps) => {
       </div>
 
       <CardContent className='pb-0'>
-        <CardTitle>Repositórios</CardTitle>
+        <div className='flex items-center justify-between'>
+          <CardTitle>Repositórios</CardTitle>
+
+          <Button variant='outline' className='gap-2' onClick={() => pageHandler('/repos')}>
+            Ver repositórios
+            <Clipboard className='w-4 h-4' />
+          </Button>
+        </div>
 
         <div className='mt-4 grid grid-cols-2 gap-3'>
           {repos.slice(0, 4).map(repo => {
             return (
-              <Card className='p-3 rounded-md space-y-1'>
+              <Card className='p-3 rounded-md space-y-1' key={repo.id}>
                 <div className='flex items-center justify-between'>
                   <CardTitle>{repo.name}</CardTitle>
+
+                  <Button variant='link' className='text-zinc-700' onClick={() => pageHandler(`/repos/${repo.id}`)}>
+                    Ver repositório
+                  </Button>
                 </div>
+
                 <CardDescription>{repo.description.slice(0, 115).concat('...')}</CardDescription>
               </Card>
             )
