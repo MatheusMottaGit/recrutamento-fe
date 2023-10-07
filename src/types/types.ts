@@ -2,6 +2,7 @@ export type Repo = {
   id: string
   name: string
   description: string
+  full_name: string
 }
 
 export type User = {
