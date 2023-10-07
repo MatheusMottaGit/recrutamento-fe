@@ -1,39 +1,28 @@
 import { Search } from "lucide-react";
 import { Button } from "./components/ui/button";
-import { Card, CardContent, CardDescription, CardTitle } from "./components/ui/card";
+import { Card, CardDescription, CardTitle } from "./components/ui/card";
 import { Input } from "./components/ui/input";
 import { Label } from "./components/ui/label";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { FormEvent, useState } from "react";
 import SearchedUserCard from "./components/searched-user-card";
-
-export interface User {
-  name: string
-  avatar_url: string
-  bio: string
-  email: string
-  followers: number
-  following: number
-  repos_url: string
-}
+import { useGithub } from "./hooks/useGithub";
 
 export function App() {
-  const [user, setUser] = useState<User | null>(null)
+  const { getUserData, user } = useGithub()
+
   const [username, setUsername] = useState<string | null>(null)
 
   function handleTypedUsername(username: string | null) {
     return username
   }
 
-  async function getUser(event: FormEvent) {
+  async function searchForUser(event: FormEvent) {
     event.preventDefault()
 
     const githubUserName = handleTypedUsername(username)
 
-    const response = await fetch(`https://api.github.com/users/${githubUserName}`)
-    const data: User = await response.json()
-    setUser(data)
-    console.log(data)
+    await getUserData(`https://api.github.com/users/${githubUserName}`)
   }
 
   return (
@@ -49,7 +38,7 @@ export function App() {
             <CardDescription>Comece informando o nome de usuário que deseja abaixo.</CardDescription>
           </div>
 
-          <form onSubmit={getUser} className="space-y-3">
+          <form onSubmit={searchForUser} className="space-y-3">
             <div className="space-y-2">
               <Label>Usuário</Label>
               <Input
