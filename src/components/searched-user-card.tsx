@@ -28,6 +28,8 @@ const SearchedUserCard = (props: SearchedUserProps) => {
 
   return (
     <Card className="p-4 space-y-7">
+
+      {/* searched user basic infos */}
       <div className="flex gap-3">
         <Avatar>
           <AvatarImage src={props.user.avatar_url} />
@@ -50,6 +52,7 @@ const SearchedUserCard = (props: SearchedUserProps) => {
         </div>
       </div>
 
+      {/* searched user repositories list */}
       <CardContent className='pb-0'>
         <div className='flex items-center justify-between'>
           <CardTitle>Repositórios</CardTitle>

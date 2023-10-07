@@ -38,9 +38,11 @@ export function App() {
             <CardDescription>Comece informando o nome de usuário que deseja abaixo.</CardDescription>
           </div>
 
+          {/* seach for user form */}
           <form onSubmit={searchForUser} className="space-y-3">
             <div className="space-y-2">
               <Label>Usuário</Label>
+
               <Input
                 placeholder="Digite aqui..."
                 onChange={(e) => setUsername(e.target.value)}
