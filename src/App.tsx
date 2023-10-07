@@ -11,9 +11,9 @@ import { useGithub } from "./hooks/useGithub";
 export function App() {
   const { getUserData, user } = useGithub()
 
-  const [username, setUsername] = useState<string | null>(null)
+  const [username, setUsername] = useState<string>('')
 
-  function handleTypedUsername(username: string | null) {
+  function handleTypedUsername(username: string) {
     return username
   }
 
@@ -44,6 +44,7 @@ export function App() {
               <Label>Usuário</Label>
 
               <Input
+                value={username}
                 placeholder="Digite aqui..."
                 onChange={(e) => setUsername(e.target.value)}
               />
