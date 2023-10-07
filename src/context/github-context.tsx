@@ -8,7 +8,6 @@ interface Github {
   getRepos: (url: string) => Promise<void>
 }
 
-
 export const GithubContext = createContext({} as Github)
 
 export const GithubProvider = ({ children }: { children: React.ReactNode }) => {
