@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     element: <AllRepos />
   },
   {
-    path: '/repos/:id',
+    path: '/repos/:full_name',
     element: <RepoDetails />
   }
 ])

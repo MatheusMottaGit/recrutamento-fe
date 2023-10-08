@@ -11,7 +11,7 @@ import { useGithub } from "./hooks/useGithub";
 export function App() {
   const { getUserData, user } = useGithub()
 
-  const [username, setUsername] = useState<string>('')
+  const [username, setUsername] = useState('')
 
   function handleTypedUsername(username: string) {
     return username

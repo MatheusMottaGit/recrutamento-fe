@@ -7,6 +7,7 @@ export type Repo = {
 
 export type User = {
   name: string
+  login: string
   avatar_url: string
   bio: string
   email: string

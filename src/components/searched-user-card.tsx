@@ -25,6 +25,7 @@ const SearchedUserCard = (props: SearchedUserProps) => {
     getRepos(props.user.repos_url)
   }, [])
 
+  console.log(repos)
 
   return (
     <Card className="p-4 space-y-7">
@@ -58,7 +59,7 @@ const SearchedUserCard = (props: SearchedUserProps) => {
           <CardTitle>Repositórios</CardTitle>
 
           <Button variant='outline' className='gap-2' onClick={() => pageHandler('/repos')}>
-            Ver repositórios
+            Ver todos os repositórios
             <Clipboard className='w-4 h-4' />
           </Button>
         </div>
@@ -70,7 +71,7 @@ const SearchedUserCard = (props: SearchedUserProps) => {
                 <div className='flex items-center justify-between'>
                   <CardTitle>{repo.name}</CardTitle>
 
-                  <Button variant='link' className='text-zinc-700' onClick={() => pageHandler(`/repos/${repo.id}`)}>
+                  <Button variant='link' className='text-zinc-700' onClick={() => pageHandler(`/repos/${repo.full_name}`)}>
                     Ver repositório
                   </Button>
                 </div>
